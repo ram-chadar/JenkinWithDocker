@@ -1,28 +1,19 @@
-version: "3.8"
-
+version: '3'
 services:
-  mysqldb:
-    container_name: mysqldb
-    image: mysql:8.0
+  mysql:
+    image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: myproduct
+      MYSQL_USER: root
       MYSQL_PASSWORD: root
     ports:
-      - "3307:3306" 
-
-  springboot-restful-webservices:
-    container_name: springboot-restful-webservices
+      - "3307:3306"
+  spring-app:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
-    ports:
-      - "8091:8091"
     depends_on:
-      - mysqldb
-      
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/myproduct?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-
+      - mysql
+    ports:
+      - "8091:8080"
