@@ -10,8 +10,6 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "3307:3306" 
-    networks:
-      - springboot-mysql-net
 
   springboot-restful-webservices:
     container_name: springboot-restful-webservices
@@ -23,15 +21,8 @@ services:
     depends_on:
       - mysqldb
       
-    networks:
-      springboot-mysql-net:
-    restart: on-failure
-      
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/myproduct?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
 
-networks:
-  springboot-mysql-net:
-    driver: bridge
